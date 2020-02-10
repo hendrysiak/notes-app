@@ -1,11 +1,14 @@
 import express from "express";
 import connect from "./services/db";
 import noteRoute from "./routes/notes";
-import bodyParser from "body-parser";
+// import { allowCrossDomain } from "./services/cors";
+
+import cors from "cors";
 const app = express();
 const port = 4000; // default port to listen
 connect();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

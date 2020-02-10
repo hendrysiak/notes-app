@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState, FunctionComponent } from "react";
-// import { createEditor, Editor, Transforms } from "slate";
-// import { Slate, Editable, withReact, useSlate } from "slate-react";
-// import Editor from "../Slate/Editor";
+import axios from "axios";
 import {
   Editor,
   EditorState,
@@ -12,7 +10,7 @@ import {
 import { stateToHTML } from "draft-js-export-html";
 
 interface MyEditorProps {}
-const AddNote: FunctionComponent = (props: MyEditorProps) => {
+const EditNote: FunctionComponent = (props: MyEditorProps) => {
   const [editorState, setEditorState] = useState<any | null>(
     EditorState.createEmpty()
   );
@@ -33,10 +31,17 @@ const AddNote: FunctionComponent = (props: MyEditorProps) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
   };
 
-  const saveNote = () => {
+  const saveNote = async () => {
     const contentState = editorState.getCurrentContent();
-    console.log(stateToHTML(contentState));
-    // console.log(convertToRaw(contentState));
+    try {
+      await axios({
+        method: "post",
+        url: "http://localhost:4000/notes",
+        data: { note: `${stateToHTML(contentState)}` }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -64,4 +69,4 @@ const AddNote: FunctionComponent = (props: MyEditorProps) => {
   );
 };
 
-export default AddNote;
+export default EditNote;

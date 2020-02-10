@@ -38,12 +38,21 @@ exports.getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.send(err);
     }
 });
+exports.getOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const note = yield notes_1.default.findById(req.params.test_id);
+        res.json(note);
+    }
+    catch (err) {
+        res.send(err);
+    }
+});
 exports.updateOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const notes = yield notes_1.default.findByIdAndUpdate(req.params.test_id, {
+        const note = yield notes_1.default.findByIdAndUpdate(req.params.test_id, {
             note: req.body.note
         });
-        yield notes.save();
+        yield note.save();
         res.json({
             message: "note updated"
         });

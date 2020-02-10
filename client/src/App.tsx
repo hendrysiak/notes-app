@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import AddNote from "./components/AddNote/AddNote";
+import EditNote from "./components/EditNote/EditNote";
 import Notes from "./containers/Notes/Notes";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <Notes />
-        <AddNote />
+        <EditNote />
       </header>
     </div>
   );
