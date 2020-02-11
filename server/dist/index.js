@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const db_1 = __importDefault(require("./services/db"));
 const notes_1 = __importDefault(require("./routes/notes"));
-// import { allowCrossDomain } from "./services/cors";
 const cors_1 = __importDefault(require("cors"));
 const app = express_1.default();
 const port = 4000; // default port to listen

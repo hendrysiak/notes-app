@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dbURL = "mongodb+srv://hendrysiak:hendrysiak1@notes-ulgxj.mongodb.net/test?retryWrites=true&w=majority";
-//   "mongodb+srv://hendrysiak:hendrysiak1@notes-ulgxj.mongodb.net/test?retryWrites=true&w=majority";
 const connect = () => {
     mongoose_1.default
         .connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })

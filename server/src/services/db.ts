@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 const dbURL =
   "mongodb+srv://hendrysiak:hendrysiak1@notes-ulgxj.mongodb.net/test?retryWrites=true&w=majority";
-//   "mongodb+srv://hendrysiak:hendrysiak1@notes-ulgxj.mongodb.net/test?retryWrites=true&w=majority";
 
 const connect = () => {
   mongoose

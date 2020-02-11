@@ -48,7 +48,7 @@ export const updateOne = async (req: any, res: any) => {
 
 export const deleteOne = async (req: any, res: any) => {
   try {
-    await Notes.remove({
+    await Notes.deleteOne({
       _id: req.params.note_id
     });
     res.json({

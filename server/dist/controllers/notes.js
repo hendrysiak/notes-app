@@ -61,7 +61,7 @@ exports.updateOne = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.deleteOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield notes_1.default.remove({
+        yield notes_1.default.deleteOne({
             _id: req.params.note_id
         });
         res.json({

@@ -1,9 +1,9 @@
 import express from "express";
 import connect from "./services/db";
 import noteRoute from "./routes/notes";
-// import { allowCrossDomain } from "./services/cors";
 
 import cors from "cors";
+
 const app = express();
 const port = 4000; // default port to listen
 connect();
