@@ -12,7 +12,6 @@ const App = () => {
   const [isLoading, setLoadingState] = useState<boolean>(true);
 
   useEffect(() => {
-    // setLoadingState(true);
     const getData = async () => {
       try {
         const result = await axios.get("http://localhost:4000/notes");
