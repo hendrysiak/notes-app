@@ -4,16 +4,37 @@ import {
   Editor,
   EditorState,
   RichUtils,
-  convertToRaw,
-  convertFromRaw
+  convertFromHTML,
+  ContentState
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
-interface MyEditorProps {}
-const EditNote: FunctionComponent = (props: MyEditorProps) => {
-  const [editorState, setEditorState] = useState<any | null>(
-    EditorState.createEmpty()
-  );
+interface MyEditorProps {
+  isEdit: string;
+}
+const EditNote: FunctionComponent<MyEditorProps> = ({
+  isEdit = ""
+}: MyEditorProps) => {
+  const [editorState, setEditorState] = useState<any | null>();
+
+  useEffect(() => {
+    if (isEdit) {
+      const startEdit = async () => {
+        try {
+          const note = await axios.get(`http://localhost:4000/notes/${isEdit}`);
+          const content = await convertFromHTML(note.data.note);
+          const noteToEdit = ContentState.createFromBlockArray(
+            content.contentBlocks,
+            content.entityMap
+          );
+          await setEditorState(EditorState.createWithContent(noteToEdit));
+        } catch (err) {}
+      };
+      startEdit();
+    } else {
+      setEditorState(EditorState.createEmpty());
+    }
+  });
   const [boldIsActive, setBoldActive] = useState<boolean>(false);
   const [italicIsActive, setItalicActive] = useState<boolean>(false);
 
@@ -39,13 +60,16 @@ const EditNote: FunctionComponent = (props: MyEditorProps) => {
         url: "http://localhost:4000/notes",
         data: { note: `${stateToHTML(contentState)}` }
       });
+      setEditorState(EditorState.createEmpty());
+      setBoldActive(false);
+      setItalicActive(false);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className="AppContainer">
+    <div className="AddNote">
       <button
         className={boldIsActive ? "active" : ""}
         data-style="BOLD"

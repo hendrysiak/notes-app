@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const notes_1 = __importDefault(require("../models/notes"));
 exports.createNew = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // tslint:disable-next-line:no-console
-        console.log(req.body);
         const { date, note } = req.body;
         const notes = yield new notes_1.default({
             date,
@@ -40,7 +38,7 @@ exports.getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const note = yield notes_1.default.findById(req.params.test_id);
+        const note = yield notes_1.default.findById(req.params.note_id);
         res.json(note);
     }
     catch (err) {
@@ -49,7 +47,7 @@ exports.getOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.updateOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const note = yield notes_1.default.findByIdAndUpdate(req.params.test_id, {
+        const note = yield notes_1.default.findByIdAndUpdate(req.params.note_id, {
             note: req.body.note
         });
         yield note.save();
@@ -64,7 +62,7 @@ exports.updateOne = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.deleteOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield notes_1.default.remove({
-            _id: req.params.test_id
+            _id: req.params.note_id
         });
         res.json({
             message: "Successfully deleted"

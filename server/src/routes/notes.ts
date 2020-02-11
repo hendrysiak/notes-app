@@ -9,6 +9,7 @@ router
 
 router
   .route("/:note_id")
+  .get(Controllers.getOne)
   .put(Controllers.updateOne)
   .delete(Controllers.deleteOne);
 
