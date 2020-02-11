@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, FunctionComponent } from "react";
+import React, { useEffect, useState, FunctionComponent } from "react";
 import axios from "axios";
 import {
   Editor,
@@ -9,19 +9,23 @@ import {
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
-interface MyEditorProps {
-  isEdit: string;
-}
-const EditNote: FunctionComponent<MyEditorProps> = ({
-  isEdit = ""
-}: MyEditorProps) => {
-  const [editorState, setEditorState] = useState<any | null>();
+// interface MyEditorProps {
+//   isEdit: string;
+//   // updateNotes: (event: React.MouseEvent<HTMLButtonElement>) => void;
+// }
+// const EditNote: FunctionComponent<MyEditorProps> = (props: MyEditorProps) => {
+const EditNote = (props: any) => {
+  const [editorState, setEditorState] = useState<any | null>(
+    EditorState.createEmpty()
+  );
 
   useEffect(() => {
-    if (isEdit) {
+    if (props.isEdit) {
       const startEdit = async () => {
         try {
-          const note = await axios.get(`http://localhost:4000/notes/${isEdit}`);
+          const note = await axios.get(
+            `http://localhost:4000/notes/${props.isEdit}`
+          );
           const content = await convertFromHTML(note.data.note);
           const noteToEdit = ContentState.createFromBlockArray(
             content.contentBlocks,
@@ -34,7 +38,7 @@ const EditNote: FunctionComponent<MyEditorProps> = ({
     } else {
       setEditorState(EditorState.createEmpty());
     }
-  });
+  }, [props.isEdit]);
   const [boldIsActive, setBoldActive] = useState<boolean>(false);
   const [italicIsActive, setItalicActive] = useState<boolean>(false);
 
@@ -68,6 +72,22 @@ const EditNote: FunctionComponent<MyEditorProps> = ({
     }
   };
 
+  const updateNote = async () => {
+    const contentState = editorState.getCurrentContent();
+    try {
+      await axios({
+        method: "put",
+        url: `http://localhost:4000/notes/${props.isEdit}`,
+        data: { note: `${stateToHTML(contentState)}` }
+      });
+      setEditorState(EditorState.createEmpty());
+      setBoldActive(false);
+      setItalicActive(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="AddNote">
       <button
@@ -88,7 +108,22 @@ const EditNote: FunctionComponent<MyEditorProps> = ({
       <div className="DraftWrapper">
         <Editor editorState={editorState} onChange={setEditorState} />
       </div>
-      <button onClick={saveNote}>ADD NOTE TO DB</button>
+      <button
+        onClick={() => {
+          saveNote();
+          props.shouldUpdate();
+        }}
+      >
+        SAVE NOTE
+      </button>
+      <button
+        onClick={() => {
+          updateNote();
+          props.shouldUpdate();
+        }}
+      >
+        UPDATE NOTE
+      </button>
     </div>
   );
 };

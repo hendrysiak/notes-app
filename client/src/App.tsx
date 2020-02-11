@@ -7,6 +7,7 @@ import axios from "axios";
 const App = () => {
   const [data, setData] = useState([]);
   const [editNote, setEditNote] = useState("");
+  const [shouldUpdate, updateStatus] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -18,12 +19,18 @@ const App = () => {
       }
     };
     getData();
-  }, []);
+  }, [shouldUpdate]);
+
+  useEffect(() => updateStatus(false));
 
   const changeEvent = (event: any) => {
     event.preventDefault();
     const element = event.target;
     setEditNote(element.getAttribute("data-id"));
+  };
+
+  const updateNotes = () => {
+    updateStatus(true);
   };
 
   return (
@@ -39,12 +46,13 @@ const App = () => {
                   date={item.date}
                   content={item.note}
                   clicked={(event: any) => changeEvent(event)}
+                  shouldUpdate={() => updateNotes()}
                 />
               ))
             : null}
         </ul>
 
-        {<EditNote isEdit={editNote} />}
+        {<EditNote isEdit={editNote} shouldUpdate={() => updateNotes()} />}
       </div>
     </div>
   );
