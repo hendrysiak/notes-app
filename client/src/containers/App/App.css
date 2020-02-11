@@ -1,0 +1,111 @@
+.App {
+    min-height: 100vh;
+    text-align: center;
+    background-color: #282c34;
+    font-size: calc(10px + 1vmin);
+    color: white;
+}
+
+.Notes {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.AddNote {
+    min-width: 50vw;
+    /* height: 40vh; */
+    margin: 50px auto;
+    background-color: #fed9b4;
+    border-radius: 25px;
+    align-self: flex-start;
+}
+
+.DraftWrapper {
+    /* min-height: 70%; */
+    border: 2px solid black;
+    color: black;
+    background-color: rgba(100%, 100%, 100%, 50%);
+}
+
+.AddNote button {
+    margin: 5px 10px;
+    background-color: rgba(100%, 100%, 100%, 0%);
+    border-radius: 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.AddNote .active {
+    background-color: yellowgreen;
+}
+
+.Notes ul {
+    max-width: 30vw;
+    list-style: none;
+    padding-inline-start: 0px;
+    flex-wrap: wrap;
+}
+
+.Note {
+    min-height: 25vh;
+    margin: 10px 5px;
+    background-color: #fed9b4;
+    color: black;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.Note h4 {
+    margin: 5px 0;
+}
+
+.Note button {
+    margin: 5px;
+    width: 45%;
+    border-radius: 25px;
+    background-color: rgba(100%, 100%, 100%, 0%);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.NoteWrapper {
+    height: 100%;
+    background-color: rgba(100%, 100%, 100%, 0%);
+    z-index: 1;
+}
+
+.NoteWrapper div {
+    min-height: 20vh;
+    background-color: rgba(100%, 100%, 100%, 50%);
+}
+
+@media (max-width: 500px) {
+    .AddNote button {
+        font-size: 0.8rem;
+    }
+    .Notes {
+        flex-direction: column-reverse;
+    }
+    .Notes ul {
+        max-width: 100%;
+        display: flex;
+    }
+    .Note {
+        max-width: 30vw;
+    }
+    .Note button {
+        font-size: 0.8rem;
+    }
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

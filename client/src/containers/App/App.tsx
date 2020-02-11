@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import EditNote from "./components/EditNote/EditNote";
-import Notes from "./containers/Notes/Notes";
+import EditNote from "../../components/EditNote/EditNote";
+import Notes from "../../components/Notes/Notes";
 import axios from "axios";
 
 const App = () => {
-  const [data, setData] = useState([]);
-  const [editNote, setEditNote] = useState("");
-  const [shouldUpdate, updateStatus] = useState(false);
+  const [data, setData] = useState<[]>([]);
+  const [editNote, setEditNote] = useState<string>("");
+  const [shouldUpdate, setUpdateStatus] = useState<boolean>(false);
+  const [isLoading, setLoadingState] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -21,21 +22,20 @@ const App = () => {
     getData();
   }, [shouldUpdate]);
 
-  useEffect(() => updateStatus(false));
+  useEffect(() => setUpdateStatus(false), [shouldUpdate]);
 
   const changeEvent = (event: any) => {
-    event.preventDefault();
-    const element = event.target;
+    event.stopPropagation();
+    const element = event.target.parentNode;
     setEditNote(element.getAttribute("data-id"));
   };
 
   const updateNotes = () => {
-    updateStatus(true);
+    setUpdateStatus(true);
   };
 
   return (
     <div className="App">
-      <header className="App-header"></header>
       <div className="Notes">
         <ul>
           {data

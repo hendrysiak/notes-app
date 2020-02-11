@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FunctionComponent } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Editor,
@@ -9,11 +9,6 @@ import {
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
-// interface MyEditorProps {
-//   isEdit: string;
-//   // updateNotes: (event: React.MouseEvent<HTMLButtonElement>) => void;
-// }
-// const EditNote: FunctionComponent<MyEditorProps> = (props: MyEditorProps) => {
 const EditNote = (props: any) => {
   const [editorState, setEditorState] = useState<any | null>(
     EditorState.createEmpty()
