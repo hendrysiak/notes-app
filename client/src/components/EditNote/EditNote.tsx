@@ -27,7 +27,9 @@ const EditNote = (props: any) => {
             content.entityMap
           );
           await setEditorState(EditorState.createWithContent(noteToEdit));
-        } catch (err) {}
+        } catch (err) {
+          alert(err);
+        }
       };
       startEdit();
     } else {
@@ -63,7 +65,7 @@ const EditNote = (props: any) => {
       setBoldActive(false);
       setItalicActive(false);
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
 
@@ -79,7 +81,7 @@ const EditNote = (props: any) => {
       setBoldActive(false);
       setItalicActive(false);
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
 

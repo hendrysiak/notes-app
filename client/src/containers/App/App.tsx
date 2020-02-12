@@ -18,7 +18,7 @@ const App = () => {
         setData(result.data);
         setLoadingState(false);
       } catch (err) {
-        console.log(err);
+        alert(err);
         setLoadingState(false);
       }
     };

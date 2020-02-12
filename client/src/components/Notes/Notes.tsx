@@ -12,7 +12,7 @@ const Notes = (props: any) => {
         url: `http://localhost:4000/notes/${props.id}`
       });
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
   return (
