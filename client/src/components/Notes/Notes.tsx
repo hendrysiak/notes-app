@@ -6,13 +6,17 @@ const Notes = (props: any) => {
     return { __html: props.content };
   };
   const deleteNote = async () => {
-    try {
-      await axios({
-        method: "delete",
-        url: `http://localhost:4000/notes/${props.id}`
-      });
-    } catch (err) {
-      alert(err);
+    if (window.confirm("Are you sure?")) {
+      try {
+        await axios({
+          method: "delete",
+          url: `http://localhost:4000/notes/${props.id}`
+        });
+      } catch (err) {
+        alert(err);
+      }
+    } else {
+      return;
     }
   };
   return (

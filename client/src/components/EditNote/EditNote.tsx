@@ -71,17 +71,21 @@ const EditNote = (props: any) => {
 
   const updateNote = async () => {
     const contentState = editorState.getCurrentContent();
-    try {
-      await axios({
-        method: "put",
-        url: `http://localhost:4000/notes/${props.isEdit}`,
-        data: { note: `${stateToHTML(contentState)}` }
-      });
-      setEditorState(EditorState.createEmpty());
-      setBoldActive(false);
-      setItalicActive(false);
-    } catch (err) {
-      alert(err);
+    if (window.confirm("Are you sure?")) {
+      try {
+        await axios({
+          method: "put",
+          url: `http://localhost:4000/notes/${props.isEdit}`,
+          data: { note: `${stateToHTML(contentState)}` }
+        });
+        setEditorState(EditorState.createEmpty());
+        setBoldActive(false);
+        setItalicActive(false);
+      } catch (err) {
+        alert(err);
+      }
+    } else {
+      return;
     }
   };
 
