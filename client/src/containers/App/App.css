@@ -15,8 +15,7 @@
 }
 
 .AddNote {
-    min-width: 50vw;
-    /* height: 40vh; */
+    min-width: 40vw;
     margin: 50px auto;
     background-color: #fed9b4;
     border-radius: 25px;
@@ -24,7 +23,7 @@
 }
 
 .DraftWrapper {
-    /* min-height: 70%; */
+    min-height: 10vh;
     border: 2px solid black;
     color: black;
     background-color: rgba(100%, 100%, 100%, 50%);
@@ -36,6 +35,12 @@
     border-radius: 25px;
     font-size: 1.2rem;
     cursor: pointer;
+    transition-duration: .5s;
+}
+
+.AddNote button:hover {
+    background-color: black;
+    color: #fed9b4;
 }
 
 .AddNote .active {
@@ -69,6 +74,12 @@
     background-color: rgba(100%, 100%, 100%, 0%);
     font-size: 1.1rem;
     cursor: pointer;
+    transition-duration: .5s;
+}
+
+.Note button:hover {
+    background-color: black;
+    color: #fed9b4;
 }
 
 .NoteWrapper {
