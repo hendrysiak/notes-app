@@ -22,7 +22,7 @@ const App = () => {
       }
     };
     getData();
-  }, [data]);
+  }, []);
 
   const changeEvent = (event: any) => {
     event.stopPropagation();
