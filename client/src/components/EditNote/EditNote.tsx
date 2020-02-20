@@ -56,11 +56,12 @@ const EditNote = (props: any) => {
   const saveNote = async () => {
     const contentState = editorState.getCurrentContent();
     try {
-      await axios({
+      const result = await axios({
         method: "post",
         url: "http://localhost:4000/notes",
         data: { note: `${stateToHTML(contentState)}` }
       });
+      saveNoteHandler(result.data);
       setEditorState(EditorState.createEmpty());
       setBoldActive(false);
       setItalicActive(false);
@@ -72,12 +73,14 @@ const EditNote = (props: any) => {
   const updateNote = async () => {
     const contentState = editorState.getCurrentContent();
     if (window.confirm("Are you sure?")) {
+      const note = `${stateToHTML(contentState)}`;
       try {
         await axios({
           method: "put",
           url: `http://localhost:4000/notes/${props.isEdit}`,
-          data: { note: `${stateToHTML(contentState)}` }
+          data: { note }
         });
+        updateNoteHandler(note, props.isEdit);
         setEditorState(EditorState.createEmpty());
         setBoldActive(false);
         setItalicActive(false);
@@ -87,6 +90,18 @@ const EditNote = (props: any) => {
     } else {
       return;
     }
+  };
+
+  const saveNoteHandler = (result: any) => {
+    const data = [...props.data];
+    data.push(result);
+    props.setData(data);
+  };
+
+  const updateNoteHandler = (note: any, id: string) => {
+    const data = [...props.data];
+    data[data.findIndex(note => note._id === id)].note = note;
+    props.setData(data);
   };
 
   return (
@@ -112,7 +127,6 @@ const EditNote = (props: any) => {
       <button
         onClick={() => {
           saveNote();
-          props.shouldUpdate();
         }}
       >
         SAVE NOTE
@@ -120,7 +134,6 @@ const EditNote = (props: any) => {
       <button
         onClick={() => {
           updateNote();
-          props.shouldUpdate();
         }}
       >
         UPDATE NOTE

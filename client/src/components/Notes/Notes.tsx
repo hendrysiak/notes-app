@@ -12,6 +12,7 @@ const Notes = (props: any) => {
           method: "delete",
           url: `http://localhost:4000/notes/${props.id}`
         });
+        deleteNoteHandler(props.id);
       } catch (err) {
         alert(err);
       }
@@ -19,19 +20,22 @@ const Notes = (props: any) => {
       return;
     }
   };
+
+  const deleteNoteHandler = (id: string) => {
+    const data = [...props.data];
+    data.splice(
+      data.findIndex(note => note._id === id),
+      1
+    );
+    props.setData([...data]);
+  };
+
   return (
     <li className="Note">
-      <div className="NoteWrapper" data-id={props.id} onClick={props.clicked}>
+      <div className="NoteWrapper" data-id={props.id}>
         <h4>{props.date}</h4>
         <div dangerouslySetInnerHTML={createNote()}></div>
-        <button
-          onClick={() => {
-            deleteNote();
-            props.shouldUpdate();
-          }}
-        >
-          DELETE NOTE
-        </button>
+        <button onClick={() => deleteNote()}>DELETE NOTE</button>
         <button onClick={props.clicked}>EDIT NOTE</button>
       </div>
     </li>

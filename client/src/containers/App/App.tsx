@@ -8,7 +8,6 @@ import Loader from "../../components/UI/Loader/Loader";
 const App = () => {
   const [data, setData] = useState<[]>([]);
   const [editNote, setEditNote] = useState<string>("");
-  const [shouldUpdate, setUpdateStatus] = useState<boolean>(false);
   const [isLoading, setLoadingState] = useState<boolean>(true);
 
   useEffect(() => {
@@ -23,22 +22,12 @@ const App = () => {
       }
     };
     getData();
-  }, [shouldUpdate]);
-
-  useEffect(() => {
-    setUpdateStatus(false);
-    setLoadingState(false);
-  }, [shouldUpdate]);
+  }, [data]);
 
   const changeEvent = (event: any) => {
     event.stopPropagation();
     const element = event.target.parentNode;
     setEditNote(element.getAttribute("data-id"));
-  };
-
-  const updateNotes = () => {
-    setLoadingState(false);
-    setUpdateStatus(true);
   };
 
   return (
@@ -53,14 +42,15 @@ const App = () => {
                   date={item.date}
                   content={item.note}
                   clicked={(event: any) => changeEvent(event)}
-                  shouldUpdate={() => updateNotes()}
+                  data={data}
+                  setData={setData}
                 />
               ))
             : null}
         </ul>
 
-        <EditNote isEdit={editNote} shouldUpdate={() => updateNotes()} />
-        {isLoading ? <Loader /> : ""}
+        <EditNote isEdit={editNote} data={data} setData={setData} />
+        {isLoading && <Loader />}
       </div>
     </div>
   );
